@@ -172,8 +172,8 @@
   </ul>
 </details>
 <details>
-  <summary><b>SCORE_MINI_GAME_TILES</b> - REF</summary>
-  <p>Ваша реф. ссылка</p>
+  <summary><b>REF</b> - Ваша реф. ссылка</summary>
+  <p>Указываете все что после = в вашей URL ссылки</p>
   <ul>
     <li><strong>Пример:</strong> <code>kentId918432365</code></li>
     <li><strong>Дефолт:</strong> <code>kentId918432365</code></li>
