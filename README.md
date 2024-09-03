@@ -163,13 +163,20 @@
     <li><strong>Дефолт:</strong> <code>[600,900]</code></li>
   </ul>
 </details>
-
 <details>
-  <summary><b>SCORE_MINI_GAME_TILES</b> - Максимальный счет для игры TILES</summary>
-  <p>Устанавливает рандомный счет, который будет достигнут в игре.</p>
+  <summary><b>USE_REF</b> - Включить режим загона по рефке?</summary>
+  <p>Когда включаешь ее, все аккаунты загоняются по одной реф. ссылке, лучше один раз включить и потом поставить в False</p>
   <ul>
-    <li><strong>Пример:</strong> <code>[300,500]</code></li>
-    <li><strong>Дефолт:</strong> <code>[300,500]</code></li>
+    <li><strong>Пример:</strong> <code>True</code></li>
+    <li><strong>Дефолт:</strong> <code>False</code></li>
+  </ul>
+</details>
+<details>
+  <summary><b>SCORE_MINI_GAME_TILES</b> - REF</summary>
+  <p>Ваша реф. ссылка</p>
+  <ul>
+    <li><strong>Пример:</strong> <code>kentId918432365</code></li>
+    <li><strong>Дефолт:</strong> <code>kentId918432365</code></li>
   </ul>
 </details>
 
