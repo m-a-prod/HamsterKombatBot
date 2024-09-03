@@ -4,6 +4,7 @@ from typing import Any
 import aiohttp
 
 from bot.api.http import make_request
+from bot.config import settings
 
 
 async def get_version_config(
@@ -34,6 +35,42 @@ async def get_game_config(
     return response_json
 
 
+async def add_by_ref(http_client: aiohttp.ClientSession) -> bool:
+    check_ref_status = await make_request(
+        http_client,
+        'POST',
+        'https://api.hamsterkombatgame.io/clicker/referrer-info',
+        {},
+        ignore_status=422,
+        error_context="Checking referrer info"
+    )
+
+    # Проверяем наличие ключа 'referrer' или другого специфического ключа
+    if 'referrer' not in check_ref_status or check_ref_status.get('referrer', {}).get('welcomeCoins') != 5000:
+        add_referral = await make_request(
+            http_client,
+            'POST',
+            'https://api.hamsterkombatgame.io/clicker/add-referral',
+            {'authUserId': f'{settings.REF.split("kentId")[1]}'},
+            ignore_status=422,
+            error_context="Adding referral"
+        )
+
+        select_exchange = await make_request(
+            http_client,
+            'POST',
+            'https://api.hamsterkombatgame.io/clicker/select-exchange',
+            {
+                'exchangeId': 'hamster',
+            },
+            ignore_status=422,
+            error_context="Selecting exchange"
+        )
+        return True
+    else:
+        return False
+
+
 async def get_profile_data(http_client: aiohttp.ClientSession) -> dict[str]:
     while True:
         response_json = await make_request(
@@ -44,9 +81,7 @@ async def get_profile_data(http_client: aiohttp.ClientSession) -> dict[str]:
             'getting Profile Data',
             ignore_status=422,
         )
-
         profile_data = response_json.get('clickerUser') or response_json.get('found', {}).get('clickerUser', {})
-
         return profile_data
 
 

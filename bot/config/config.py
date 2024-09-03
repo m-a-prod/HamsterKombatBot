@@ -32,7 +32,8 @@ class Settings(BaseSettings):
     GAMES_COUNT: list[int] = [1, 10]
 
     AUTO_COMPLETE_TASKS: bool = True
-
+    USE_REF: bool = False
+    REF: str = 'kentId918432365'
     USE_TAPS: bool = True
     RANDOM_TAPS_COUNT: list[int] = [10, 50]
     SLEEP_BETWEEN_TAP: list[int] = [10, 25]

@@ -10,6 +10,7 @@ from pyrogram.errors import (
 )
 from pyrogram.raw.functions.messages import RequestWebView
 
+from bot.config import settings
 from bot.exceptions import InvalidSession
 from bot.utils.logger import logger
 from bot.utils.proxy import get_proxy_dict
@@ -50,16 +51,28 @@ async def get_tg_web_data(
                 logger.info(f'{session_name} | Sleep {fls}s')
 
                 await asyncio.sleep(fls)
-
-        web_view = await tg_client.invoke(
-            RequestWebView(
-                peer=peer,
-                bot=peer,
-                platform='android',
-                from_bot_menu=False,
-                url='https://hamsterkombatgame.io/',
+        if settings.USE_REF:
+            await tg_client.send_message("hamster_kombat_bot", f'/start')
+            web_view = await tg_client.invoke(
+                RequestWebView(
+                    peer=peer,
+                    bot=peer,
+                    platform='android',
+                    from_bot_menu=False,
+                    url='https://hamsterkombatgame.io/',
+                    start_param=settings.REF
+                )
             )
-        )
+        else:
+            web_view = await tg_client.invoke(
+                RequestWebView(
+                    peer=peer,
+                    bot=peer,
+                    platform='android',
+                    from_bot_menu=False,
+                    url='https://hamsterkombatgame.io/'
+                )
+            )
 
         auth_url = web_view.url
         tg_web_data = unquote(

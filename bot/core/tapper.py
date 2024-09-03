@@ -23,7 +23,7 @@ from bot.api.clicker import (
     get_ip_info,
     get_account_info,
     get_skins,
-    send_taps)
+    send_taps, add_by_ref)
 from bot.api.boosts import get_boosts, apply_boost
 from bot.api.upgrades import get_upgrades, buy_upgrade
 from bot.api.combo import claim_daily_combo, get_combo_cards
@@ -98,7 +98,9 @@ class Tapper:
 
                     account_info = await get_account_info(http_client=http_client)
                     user_id = account_info.get('accountInfo', {}).get('id', 1)
-
+                    if settings.USE_REF:
+                        if await add_by_ref(http_client):
+                            logger.success(f"{self.session_name} | Added by referral")
                     profile_data = await get_profile_data(http_client=http_client)
 
                     config_version = http_client.headers.get('Config-Version')
